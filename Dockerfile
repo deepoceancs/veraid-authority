@@ -1,7 +1,12 @@
-FROM node:18.14.0 as build
+FROM node:18.20.5 as build
 WORKDIR /tmp/veraid-authority
-COPY package*.json ./
-RUN npm ci
+COPY package.json ./
+# -----------------------------------
+# Original Steps
+# COPY package-lock.json ./
+# RUN npm ci 
+# -----------------------------------
+RUN npm install --loglevel verbose
 COPY . ./
 RUN npm run build && npm prune --omit=dev && rm -r src
 
